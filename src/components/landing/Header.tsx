@@ -13,13 +13,13 @@ function Header() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-muted-foreground hover:text-foreground">
+          <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
             How it Works
           </a>
-          <a href="#" className="text-muted-foreground hover:text-foreground">
+          <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
             Pricing
           </a>
-          <a href="#" className="text-muted-foreground hover:text-foreground">
+          <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
             About
           </a>
         </div>

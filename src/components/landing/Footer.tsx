@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <footer className="px-6 py-12 border-t bg-muted/30">
+    <footer id="about" className="px-6 py-12 border-t bg-muted/30 scroll-mt-16">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="space-y-4">
@@ -25,17 +25,17 @@ function Footer() {
             <h4 className="font-medium mb-3">Product</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="#" className="hover:text-foreground">
+                <a href="#how-it-works" className="hover:text-foreground transition-colors">
                   How it works
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground">
+                <a href="#pricing" className="hover:text-foreground transition-colors">
                   Pricing
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground">
+                <a href="#" className="hover:text-foreground transition-colors">
                   FAQ
                 </a>
               </li>
