@@ -8,11 +8,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "../ui/dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../ui/button";
 import { formatPhoneNumber } from "@/lib/utils";
 
 interface AddDoctorDialogProps {
@@ -68,7 +68,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               <Input
                 id="new-name"
                 value={newDoctor.name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDoctor({ ...newDoctor, name: e.target.value })}
+                onChange={(e) => setNewDoctor({ ...newDoctor, name: e.target.value })}
                 placeholder="Dr. John Smith"
               />
             </div>
@@ -77,7 +77,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               <Input
                 id="new-speciality"
                 value={newDoctor.speciality}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDoctor({ ...newDoctor, speciality: e.target.value })}
+                onChange={(e) => setNewDoctor({ ...newDoctor, speciality: e.target.value })}
                 placeholder="General Dentistry"
               />
             </div>
@@ -89,7 +89,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               id="new-email"
               type="email"
               value={newDoctor.email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDoctor({ ...newDoctor, email: e.target.value })}
+              onChange={(e) => setNewDoctor({ ...newDoctor, email: e.target.value })}
               placeholder="doctor@example.com"
             />
           </div>
@@ -98,7 +98,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
             <Input
               id="new-phone"
               value={newDoctor.phone}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e.target.value)}
+              onChange={(e) => handlePhoneChange(e.target.value)}
               placeholder="(555) 123-4567"
             />
           </div>
@@ -108,7 +108,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               <Label htmlFor="new-gender">Gender</Label>
               <Select
                 value={newDoctor.gender || ""}
-                onValueChange={(value: string) => setNewDoctor({ ...newDoctor, gender: value as Gender })}
+                onValueChange={(value) => setNewDoctor({ ...newDoctor, gender: value as Gender })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select gender" />
@@ -124,7 +124,7 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               <Label htmlFor="new-status">Status</Label>
               <Select
                 value={newDoctor.isActive ? "active" : "inactive"}
-                onValueChange={(value: string) =>
+                onValueChange={(value) =>
                   setNewDoctor({ ...newDoctor, isActive: value === "active" })
                 }
               >

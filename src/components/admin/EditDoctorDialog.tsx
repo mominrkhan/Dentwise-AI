@@ -9,11 +9,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "../ui/dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Button } from "../ui/button";
 
 interface EditDoctorDialogProps {
   isOpen: boolean;
@@ -60,7 +60,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 <Input
                   id="name"
                   value={editingDoctor.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditingDoctor({ ...editingDoctor, name: e.target.value })}
+                  onChange={(e) => setEditingDoctor({ ...editingDoctor, name: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
@@ -68,7 +68,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 <Input
                   id="speciality"
                   value={editingDoctor.speciality}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange={(e) =>
                     setEditingDoctor({ ...editingDoctor, speciality: e.target.value })
                   }
                 />
@@ -81,7 +81,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 id="email"
                 type="email"
                 value={editingDoctor.email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditingDoctor({ ...editingDoctor, email: e.target.value })}
+                onChange={(e) => setEditingDoctor({ ...editingDoctor, email: e.target.value })}
               />
             </div>
 
@@ -90,7 +90,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
               <Input
                 id="phone"
                 value={editingDoctor.phone}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handlePhoneChange(e.target.value)}
+                onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder="(555) 123-4567"
               />
             </div>
@@ -100,7 +100,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 <Label htmlFor="gender">Gender</Label>
                 <Select
                   value={editingDoctor.gender || ""}
-                  onValueChange={(value: string) =>
+                  onValueChange={(value) =>
                     setEditingDoctor({ ...editingDoctor, gender: value as Gender })
                   }
                 >
@@ -117,7 +117,7 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 <Label htmlFor="status">Status</Label>
                 <Select
                   value={editingDoctor.isActive ? "active" : "inactive"}
-                  onValueChange={(value: string) =>
+                  onValueChange={(value) =>
                     setEditingDoctor({ ...editingDoctor, isActive: value === "active" })
                   }
                 >
