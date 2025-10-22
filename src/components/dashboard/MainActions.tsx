@@ -79,7 +79,7 @@ export default function MainActions() {
             </div>
           </div>
 
-          <Link href="/dashboard/appointments">
+          <Link href="/appointments">
             <Button
               variant="outline"
               className="w-full mt-6 border-2 border-primary/20 hover:border-primary/40 hover:bg-primary/5 font-semibold py-3 rounded-xl transition-all duration-300"

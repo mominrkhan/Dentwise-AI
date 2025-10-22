@@ -18,7 +18,7 @@ function NoNextAppointments() {
             <CalendarIcon className="size-8 opacity-50" />
           </div>
           <p className="text-sm mb-3">No upcoming appointments</p>
-          <Link href="/dashboard/appointments">
+          <Link href="/appointments">
             <Button size="sm" variant="outline" className="w-full">
               Schedule Your Next Visit
             </Button>
