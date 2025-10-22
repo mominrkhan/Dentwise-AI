@@ -9,8 +9,34 @@ import Navbar from "@/components/Navbar";
 import { useBookAppointment, useUserAppointments } from "@/hooks/use-appointment";
 import { APPOINTMENT_TYPES } from "@/lib/utils";
 import { format } from "date-fns";
+import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
+
+function DoctorAvatar({ imageUrl, name }: { imageUrl: string; name: string }) {
+  const [imageError, setImageError] = useState(false);
+
+  if (!imageUrl || imageError) {
+    return (
+      <div className="size-10 bg-primary/10 rounded-full flex items-center justify-center">
+        <span className="text-xs font-medium text-primary">
+          {name.split(' ').map(n => n[0]).join('').toUpperCase()}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      src={imageUrl}
+      alt={name}
+      width={40}
+      height={40}
+      className="size-10 rounded-full object-cover"
+      onError={() => setImageError(true)}
+    />
+  );
+}
 
 function AppointmentsPage() {
   // state management for the booking process - this could be done with something like Zustand for larger apps
@@ -161,13 +187,10 @@ function AppointmentsPage() {
             {userAppointments.map((appointment) => (
               <div key={appointment.id} className="bg-card border rounded-lg p-4 shadow-sm">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="size-10 bg-primary/10 rounded-full flex items-center justify-center">
-                    <img
-                      src={appointment.doctorImageUrl}
-                      alt={appointment.doctorName}
-                      className="size-10 rounded-full"
-                    />
-                  </div>
+                  <DoctorAvatar 
+                    imageUrl={appointment.doctorImageUrl} 
+                    name={appointment.doctorName} 
+                  />
                   <div>
                     <p className="font-medium text-sm">{appointment.doctorName}</p>
                     <p className="text-muted-foreground text-xs">{appointment.reason}</p>
