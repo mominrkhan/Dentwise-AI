@@ -1,3 +1,5 @@
+"use client";
+
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,13 +15,34 @@ function Header() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a 
+            href="#how-it-works" 
+            className="text-muted-foreground hover:text-foreground transition-colors scroll-smooth"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#how-it-works')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             How it Works
           </a>
-          <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a 
+            href="#pricing" 
+            className="text-muted-foreground hover:text-foreground transition-colors scroll-smooth"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             Pricing
           </a>
-          <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
+          <a 
+            href="#about" 
+            className="text-muted-foreground hover:text-foreground transition-colors scroll-smooth"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             About
           </a>
         </div>

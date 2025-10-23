@@ -35,7 +35,11 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
 
   const handleSave = () => {
     if (editingDoctor) {
-      updateDoctorMutation.mutate({ ...editingDoctor }, { onSuccess: handleClose });
+      updateDoctorMutation.mutate({
+        ...editingDoctor,
+        address: editingDoctor.address || undefined,
+        area: editingDoctor.area || undefined,
+      }, { onSuccess: handleClose });
     }
   };
 
@@ -92,6 +96,30 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
                 value={editingDoctor.phone}
                 onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder="(555) 123-4567"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Input
+                id="address"
+                value={editingDoctor.address || ""}
+                onChange={(e) =>
+                  setEditingDoctor({ ...editingDoctor, address: e.target.value })
+                }
+                placeholder="123 Main St, Brooklyn, NY"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="area">Area</Label>
+              <Input
+                id="area"
+                value={editingDoctor.area || ""}
+                onChange={(e) =>
+                  setEditingDoctor({ ...editingDoctor, area: e.target.value })
+                }
+                placeholder="e.g., Manhattan (Upper East Side)"
               />
             </div>
 

@@ -16,12 +16,41 @@ import { toast } from "sonner";
 function DoctorAvatar({ imageUrl, name }: { imageUrl: string; name: string }) {
   const [imageError, setImageError] = useState(false);
 
+  // Generate a consistent gradient based on name
+  const getGradient = (name: string) => {
+    const gradients = [
+      "from-blue-400 to-cyan-300",
+      "from-purple-400 to-pink-300",
+      "from-green-400 to-emerald-300",
+      "from-orange-400 to-amber-300",
+      "from-red-400 to-rose-300",
+      "from-indigo-400 to-blue-300",
+      "from-teal-400 to-cyan-300",
+      "from-violet-400 to-purple-300",
+    ];
+    const index = name.charCodeAt(0) % gradients.length;
+    return gradients[index];
+  };
+
   if (!imageUrl || imageError) {
+    // Extract initials intelligently
+    const words = name.trim().split(/\s+/);
+    let initials = "";
+    
+    if (words.length === 1) {
+      initials = words[0].substring(0, 2).toUpperCase();
+    } else {
+      initials = words.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    }
+
     return (
-      <div className="size-10 bg-primary/10 rounded-full flex items-center justify-center">
-        <span className="text-xs font-medium text-primary">
-          {name.split(' ').map(n => n[0]).join('').toUpperCase()}
-        </span>
+      <div className="relative size-10">
+        <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(name)} rounded-full blur-sm opacity-60`} />
+        <div className={`relative size-10 bg-gradient-to-br ${getGradient(name)} rounded-full flex items-center justify-center shadow-lg ring-2 ring-white/20`}>
+          <span className="text-[10px] font-bold text-white drop-shadow-lg tracking-tight">
+            {initials}
+          </span>
+        </div>
       </div>
     );
   }
@@ -32,7 +61,7 @@ function DoctorAvatar({ imageUrl, name }: { imageUrl: string; name: string }) {
       alt={name}
       width={40}
       height={40}
-      className="size-10 rounded-full object-cover"
+      className="size-10 rounded-full object-cover shadow-md ring-2 ring-white/10"
       onError={() => setImageError(true)}
     />
   );

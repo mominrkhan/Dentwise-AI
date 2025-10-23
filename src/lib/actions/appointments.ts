@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "../prisma";
 import { AppointmentStatus } from "@prisma/client";
+import { getAvailableTimeSlots as getAvailableSlotsUtil } from "../availability";
 
 function transformAppointment(appointment: any) {
   return {
@@ -113,6 +114,15 @@ export async function getBookedTimeSlots(doctorId: string, date: string) {
   } catch (error) {
     console.error("Error fetching booked time slots:", error);
     return []; // return empty array if there's an error
+  }
+}
+
+export async function getAvailableTimeSlots(doctorId: string, date: string) {
+  try {
+    return await getAvailableSlotsUtil(doctorId, new Date(date));
+  } catch (error) {
+    console.error("Error fetching available time slots:", error);
+    return [];
   }
 }
 

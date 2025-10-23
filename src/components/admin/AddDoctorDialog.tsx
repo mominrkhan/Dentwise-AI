@@ -26,6 +26,8 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
     email: "",
     phone: "",
     speciality: "",
+    address: "",
+    area: "",
     gender: "MALE" as Gender,
     isActive: true,
   });
@@ -48,6 +50,8 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
       email: "",
       phone: "",
       speciality: "",
+      address: "",
+      area: "",
       gender: "MALE",
       isActive: true,
     });
@@ -100,6 +104,26 @@ function AddDoctorDialog({ isOpen, onClose }: AddDoctorDialogProps) {
               value={newDoctor.phone}
               onChange={(e) => handlePhoneChange(e.target.value)}
               placeholder="(555) 123-4567"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="new-address">Address</Label>
+            <Input
+              id="new-address"
+              value={newDoctor.address}
+              onChange={(e) => setNewDoctor({ ...newDoctor, address: e.target.value })}
+              placeholder="123 Main St, Brooklyn, NY"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="new-area">Area</Label>
+            <Input
+              id="new-area"
+              value={newDoctor.area}
+              onChange={(e) => setNewDoctor({ ...newDoctor, area: e.target.value })}
+              placeholder="e.g., Manhattan (Upper East Side)"
             />
           </div>
 

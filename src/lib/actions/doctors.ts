@@ -4,6 +4,7 @@ import { Gender } from "@prisma/client";
 import { prisma } from "../prisma";
 import { generateAvatar } from "../utils";
 import { revalidatePath } from "next/cache";
+import { getNextAvailableSlot } from "../availability";
 
 export async function getDoctors() {
   try {
@@ -29,6 +30,8 @@ interface CreateDoctorInput {
   email: string;
   phone: string;
   speciality: string;
+  address?: string;
+  area?: string;
   gender: Gender;
   isActive: boolean;
 }
@@ -94,6 +97,8 @@ export async function updateDoctor(input: UpdateDoctorInput) {
         email: input.email,
         phone: input.phone,
         speciality: input.speciality,
+        address: input.address,
+        area: input.area,
         gender: input.gender,
         isActive: input.isActive,
       },
@@ -118,10 +123,21 @@ export async function getAvailableDoctors() {
       orderBy: { name: "asc" },
     });
 
-    return doctors.map((doctor) => ({
-      ...doctor,
-      appointmentCount: doctor._count.appointments,
-    }));
+    // Get next available slot for each doctor in parallel
+    const doctorsWithAvailability = await Promise.all(
+      doctors.map(async (doctor) => {
+        const nextAvailable = await getNextAvailableSlot(doctor.id);
+        return {
+          ...doctor,
+          appointmentCount: doctor._count.appointments,
+          nextAvailable: nextAvailable
+            ? `${nextAvailable.formattedDate} at ${nextAvailable.formattedTime}`
+            : "No slots available",
+        };
+      })
+    );
+
+    return doctorsWithAvailability;
   } catch (error) {
     console.error("Error fetching available doctors:", error);
     throw new Error("Failed to fetch available doctors");
