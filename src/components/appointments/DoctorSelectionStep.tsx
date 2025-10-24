@@ -1,3 +1,5 @@
+"use client";
+
 import { useAvailableDoctors } from "@/hooks/use-doctors";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Image from "next/image";
@@ -8,50 +10,69 @@ import { DoctorCardsLoading } from "./DoctorCardsLoading";
 import { useState } from "react";
 import { Input } from "../ui/input";
 
-// Fallback avatar component with initials
-function AvatarFallback({ name }: { name: string }) {
-  // Remove quotes first
-  const cleanName = name.replace(/^["']|["']$/g, '').trim();
-  const words = cleanName.split(/\s+/);
-  
-  const meaningfulWords = words.filter(word => 
-    !['dental', 'dr', 'dr.', 'dentist', 'care', 'center', 'clinic', 'office', '-', '|', ''].includes(word.toLowerCase())
-  );
-  
-  let initials = "";
-  if (meaningfulWords.length === 0) {
-    initials = words[0]?.substring(0, 2).toUpperCase() || "DC";
-  } else if (meaningfulWords.length === 1) {
-    initials = meaningfulWords[0].substring(0, 2).toUpperCase();
-  } else {
-    initials = meaningfulWords.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+// Avatar component with image and fallback
+function DoctorAvatar({ imageUrl, name }: { imageUrl: string; name: string }) {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Generate gradient for fallback
+  const getGradient = (name: string) => {
+    const gradients = [
+      "from-indigo-600 to-indigo-400",
+      "from-violet-600 to-purple-400",
+      "from-cyan-600 to-blue-400",
+      "from-emerald-600 to-green-400",
+      "from-rose-600 to-pink-400",
+      "from-orange-600 to-amber-400",
+      "from-blue-600 to-sky-400",
+      "from-pink-600 to-rose-400",
+    ];
+    const index = name.charCodeAt(0) % gradients.length;
+    return gradients[index];
+  };
+
+  if (!imageUrl || imageError) {
+    // Fallback with initials
+    const cleanName = name.replace(/^["']|["']$/g, '').trim();
+    const words = cleanName.split(/\s+/);
+    const meaningfulWords = words.filter(word => 
+      !['dental', 'dr', 'dr.', 'dentist', 'care', 'center', 'clinic', 'office', '-', '|', ''].includes(word.toLowerCase())
+    );
+    
+    let initials = "";
+    if (meaningfulWords.length === 0) {
+      initials = words[0]?.substring(0, 2).toUpperCase() || "DC";
+    } else if (meaningfulWords.length === 1) {
+      initials = meaningfulWords[0].substring(0, 2).toUpperCase();
+    } else {
+      initials = meaningfulWords.slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    }
+
+    return (
+      <div className="relative w-16 h-16">
+        <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${getGradient(name)} blur-md opacity-40`} />
+        <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${getGradient(name)} flex items-center justify-center ring-4 ring-background shadow-xl`}>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 via-transparent to-transparent" />
+          <span className="relative text-white text-xl font-black tracking-tight drop-shadow-lg">{initials}</span>
+        </div>
+      </div>
+    );
   }
 
-  const gradients = [
-    { from: "from-indigo-600", to: "to-indigo-400", shadow: "shadow-indigo-500/50" },
-    { from: "from-violet-600", to: "to-purple-400", shadow: "shadow-violet-500/50" },
-    { from: "from-cyan-600", to: "to-blue-400", shadow: "shadow-cyan-500/50" },
-    { from: "from-emerald-600", to: "to-green-400", shadow: "shadow-emerald-500/50" },
-    { from: "from-rose-600", to: "to-pink-400", shadow: "shadow-rose-500/50" },
-    { from: "from-orange-600", to: "to-amber-400", shadow: "shadow-orange-500/50" },
-    { from: "from-blue-600", to: "to-sky-400", shadow: "shadow-blue-500/50" },
-    { from: "from-pink-600", to: "to-rose-400", shadow: "shadow-pink-500/50" },
-  ];
-  
-  const colorIndex = cleanName.charCodeAt(0) % gradients.length;
-  const gradient = gradients[colorIndex];
-  
   return (
-    <div className="relative">
-      {/* Glow effect */}
-      <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${gradient.from} ${gradient.to} blur-md opacity-40`} />
-      
-      {/* Main avatar */}
-      <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${gradient.from} ${gradient.to} flex items-center justify-center ring-4 ring-background shadow-xl ${gradient.shadow}`}>
-        {/* Shine overlay */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 via-transparent to-transparent" />
-        <span className="relative text-white text-xl font-black tracking-tight drop-shadow-lg">{initials}</span>
-      </div>
+    <div className="relative w-16 h-16">
+      {/* Use regular img tag instead of Next Image for external SVGs with complex URLs */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={imageUrl}
+        alt={name}
+        className="w-16 h-16 rounded-full object-cover ring-4 ring-background shadow-xl"
+        onError={(e) => {
+          console.log('Failed to load avatar for:', name, 'URL:', imageUrl);
+          setImageError(true);
+        }}
+        onLoad={() => setImageLoaded(true)}
+      />
     </div>
   );
 }
@@ -181,9 +202,9 @@ function DoctorSelectionStep({
                   {/* Animated glow effect */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/10 rounded-full blur-xl group-hover:blur-2xl group-hover:scale-110 transition-all duration-300 opacity-70" />
                   
-                  {/* Avatar with initials */}
+                  {/* Avatar with image or fallback initials */}
                   <div className="relative group-hover:scale-105 transition-transform duration-200">
-                    <AvatarFallback name={dentist.name} />
+                    <DoctorAvatar imageUrl={dentist.imageUrl} name={dentist.name} />
                   </div>
                   
                   {/* Availability indicator */}
