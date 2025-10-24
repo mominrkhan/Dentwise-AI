@@ -37,8 +37,8 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
     if (editingDoctor) {
       updateDoctorMutation.mutate({
         ...editingDoctor,
-        address: editingDoctor.address || undefined,
-        area: editingDoctor.area || undefined,
+        address: (editingDoctor as any).address || undefined,
+        area: (editingDoctor as any).area || undefined,
       }, { onSuccess: handleClose });
     }
   };
@@ -103,9 +103,9 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
               <Label htmlFor="address">Address</Label>
               <Input
                 id="address"
-                value={editingDoctor.address || ""}
+                value={(editingDoctor as any).address || ""}
                 onChange={(e) =>
-                  setEditingDoctor({ ...editingDoctor, address: e.target.value })
+                  setEditingDoctor({ ...editingDoctor, address: e.target.value } as any)
                 }
                 placeholder="123 Main St, Brooklyn, NY"
               />
@@ -115,9 +115,9 @@ function EditDoctorDialog({ doctor, isOpen, onClose }: EditDoctorDialogProps) {
               <Label htmlFor="area">Area</Label>
               <Input
                 id="area"
-                value={editingDoctor.area || ""}
+                value={(editingDoctor as any).area || ""}
                 onChange={(e) =>
-                  setEditingDoctor({ ...editingDoctor, area: e.target.value })
+                  setEditingDoctor({ ...editingDoctor, area: e.target.value } as any)
                 }
                 placeholder="e.g., Manhattan (Upper East Side)"
               />
