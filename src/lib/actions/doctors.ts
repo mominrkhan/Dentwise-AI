@@ -141,7 +141,19 @@ export async function getAvailableDoctors() {
       doctors.map(async (doctor) => {
         const nextAvailable = await getNextAvailableSlot(doctor.id);
         return {
-          ...doctor,
+          id: doctor.id,
+          name: doctor.name,
+          email: doctor.email,
+          phone: doctor.phone,
+          speciality: doctor.speciality,
+          bio: doctor.bio,
+          address: doctor.address,
+          area: doctor.area,
+          imageUrl: doctor.imageUrl,
+          gender: doctor.gender,
+          isActive: doctor.isActive,
+          createdAt: doctor.createdAt,
+          updatedAt: doctor.updatedAt,
           appointmentCount: doctor._count.appointments,
           nextAvailable: nextAvailable
             ? `${nextAvailable.formattedDate} at ${nextAvailable.formattedTime}`
