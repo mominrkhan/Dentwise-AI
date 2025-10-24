@@ -13,9 +13,13 @@ export function generateAvatar(name: string, gender: "MALE" | "FEMALE") {
     .replace(/[^a-z0-9]/g, '') // Remove all non-alphanumeric characters
     .substring(0, 50); // Limit length
   
-  // Simplified URL with medical theme - use "notionists" style for professional look
-  // notionists style gives clean, professional avatars perfect for doctors
-  return `https://api.dicebear.com/7.x/notionists/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  // Use multiple fallback services for better reliability
+  // Primary: DiceBear Notionists (professional medical look)
+  // Fallback: UI Avatars (simple initials)
+  const primaryUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9`;
+  
+  // For now, return the primary URL. The component will handle fallback to initials
+  return primaryUrl;
 }
 
 // phone formatting function for US numbers - ai generated 🎉

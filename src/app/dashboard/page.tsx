@@ -3,6 +3,9 @@ import MainActions from "@/components/dashboard/MainActions";
 import WelcomeSection from "@/components/dashboard/WelcomeSection";
 import Navbar from "@/components/Navbar";
 
+// Force dynamic rendering to avoid static generation issues with auth
+export const dynamic = 'force-dynamic';
+
 function DashboardPage() {
   return (
     <>

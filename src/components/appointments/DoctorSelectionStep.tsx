@@ -72,6 +72,8 @@ function DoctorAvatar({ imageUrl, name }: { imageUrl: string; name: string }) {
           setImageError(true);
         }}
         onLoad={() => setImageLoaded(true)}
+        loading="lazy"
+        crossOrigin="anonymous"
       />
     </div>
   );
