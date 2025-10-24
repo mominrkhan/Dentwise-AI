@@ -115,7 +115,20 @@ export async function getAvailableDoctors() {
   try {
     const doctors = await prisma.doctor.findMany({
       where: { isActive: true },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        speciality: true,
+        bio: true,
+        address: true,
+        area: true,
+        imageUrl: true,
+        gender: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
         _count: {
           select: { appointments: true },
         },
