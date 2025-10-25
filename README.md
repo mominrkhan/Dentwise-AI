@@ -6,9 +6,9 @@ This project is a comprehensive dental-care platform that brings **AI voice assi
 
 ## Visit The Site
 
-Feel free to check out the **[project here!]([https://your-app-url.example](https://dentwiseai.vercel.app/))**
+Feel free to check out the [project here!](https://dentwiseai.vercel.app/)
 
-![DentWise Screenshot](<img width="1012" height="652" alt="Screenshot 2025-10-24 at 11 44 35 PM" src="https://github.com/user-attachments/assets/e4154dce-c6da-4034-8a88-88af27dda75f" />)
+![DentWise Screenshot](https://github.com/user-attachments/assets/e4154dce-c6da-4034-8a88-88af27dda75f)
 
 ---
 
